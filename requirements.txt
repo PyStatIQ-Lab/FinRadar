@@ -3,3 +3,4 @@ yfinance
 matplotlib
 scikit-learn
 plotly
+textblob
