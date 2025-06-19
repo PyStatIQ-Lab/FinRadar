@@ -111,7 +111,6 @@ def calculate_risk_scores():
     
     st.session_state.assets = assets
 
-# Fetch news and analyze sentiment
 def fetch_news():
     current_time = time.time()
     if current_time - st.session_state.last_news_fetch < 300:  # 5 min cache
@@ -146,7 +145,9 @@ def fetch_news():
         
         # Update market pulse (average sentiment)
         if sentiment_scores:
-            st.session_state.market_pulse = (sum(sentiment_scores) / len(sentiment_scores) * 0.5 + 0.5
+            # Convert average sentiment from [-1, 1] to [0, 1]
+            avg_sentiment = sum(sentiment_scores) / len(sentiment_scores)
+            st.session_state.market_pulse = avg_sentiment * 0.5 + 0.5
             
         st.session_state.last_news_fetch = current_time
     except Exception as e:
