@@ -92,10 +92,12 @@ def calculate_risk_scores():
     assets = st.session_state.assets
     for idx, row in assets.iterrows():
         # Risk factors: volatility, beta, price change, volume
-        risk_score = (0.4 * min(row['volatility'] / 0.5, 1.0) + \
-                     (0.3 * min(abs(row['beta']), 2.0) / 2.0 + \
-                     (0.2 * min(abs(row['change']) / 10, 1.0)) + \
-                     (0.1 * min(row['volume'] / 100000000, 1.0))
+        risk_score = (
+            0.4 * min(row['volatility'] / 0.5, 1.0) + 
+            0.3 * min(abs(row['beta']), 2.0) / 2.0 + 
+            0.2 * min(abs(row['change']) / 10, 1.0) + 
+            0.1 * min(row['volume'] / 100000000, 1.0)
+        )
         
         assets.at[idx, 'risk_score'] = min(risk_score, 1.0)
         
